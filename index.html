@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jireth Agencia de Viajes - Tu próximo destino te espera</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .logo img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .logo h1 {
+      color: #2c5aa0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      padding: 10px 0;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: #2c5aa0;
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #2c5aa0;
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23667eea" width="1200" height="600"/><path fill="%23764ba2" d="M0,192L48,208C96,224,192,256,288,250.7C384,245,480,203,576,197.3C672,192,768,224,864,234.7C960,245,1056,235,1152,213.3L1200,192L1200,600L1152,600C1056,600,960,600,864,600C768,600,672,600,576,600C480,600,384,600,288,600C192,600,96,600,48,600L0,600Z"/></svg>') center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    
+    .hero-content h2 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .hero-content p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      color: white;
+      padding: 15px 40px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    }
+    
+    /* Sections */
+    section {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    section:nth-child(even) {
+      background: #f8f9fa;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #2c5aa0;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    /* Destinations Grid */
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 2rem;
+    }
+    
+    .destination-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .destination-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .destination-image {
+      height: 250px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .destination-image::before {
+      content: '✈️';
+      font-size: 3rem;
+      opacity: 0.3;
+      position: absolute;
+    }
+    
+    .destination-info {
+      padding: 25px;
+    }
+    
+    .destination-info h3 {
+      font-size: 1.5rem;
+      color: #2c5aa0;
+      margin-bottom: 10px;
+    }
+    
+    .destination-info p {
+      color: #666;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+    
+    .price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    
+    .price-tag {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ff6b6b;
+    }
+    
+    .book-btn {
+      background: linear-gradient(45deg, #2c5aa0, #3d6bb3);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .book-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(44, 90, 160, 0.4);
+    }
+    
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 2rem;
+    }
+    
+    .service-card {
+      text-align: center;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #2c5aa0;
+    }
+    
+    .service-card h3 {
+      color: #2c5aa0;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    /* Contact */
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 2rem;
+    }
+    
+    .contact-item {
+      text-align: center;
+      padding: 25px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .contact-icon {
+      font-size: 2.5rem;
+      color: #2c5aa0;
+      margin-bottom: 15px;
+    }
+    
+    .contact-item h3 {
+      color: #2c5aa0;
+      margin-bottom: 10px;
+    }
+    
+    .contact-item p {
+      color: #666;
+      font-weight: 600;
+    }
+    
+    /* Footer */
+    footer {
+      background: #2c5aa0;
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      nav ul {
+        gap: 20px;
+      }
+      
+      .hero-content h2 {
+        font-size: 2.5rem;
+      }
+      
+      .destinations-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#20B2AA;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#4169E1;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="90" fill="url(#logoGradient)"/>
+            <path d="M100 60 L140 80 L130 90 L140 100 L100 85 L60 100 L70 90 L60 80 Z" fill="white"/>
+            <path d="M100 120 L110 130 L100 140 L90 130 Z" fill="white"/>
+            <text x="100" y="170" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Jireth</text>
+          </svg>
+          <div>
+            <h1>Jireth</h1>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Agencia de Viajes</p>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#destinos">Destinos</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <h2>Descubre el Mundo con Jireth</h2>
+      <p>Explora destinos increíbles con paquetes turísticos diseñados especialmente para ti. Tu próxima aventura comienza aquí.</p>
+      <a href="#destinos" class="cta-button">Ver Destinos</a>
+    </div>
+  </section>
+
+  <section id="destinos">
+    <div class="container">
+      <h2 class="section-title">Destinos Populares</h2>
+      <div class="destinations-grid">
+        <div class="destination-card">
+          <div class="destination-image">Cartagena, Colombia</div>
+          <div class="destination-info">
+            <h3>Cartagena Mágica</h3>
+            <p>4 días / 3 noches en la ciudad amurallada. Incluye hotel 4 estrellas, desayunos y city tour.</p>
+            <div class="price">
+              <span class="price-tag">$1,200,000</span>
+              <button class="book-btn" onclick="bookTrip('Cartagena')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="destination-card">
+          <div class="destination-image">San Andrés, Colombia</div>
+          <div class="destination-info">
+            <h3>Paraíso Caribeño</h3>
+            <p>5 días / 4 noches en el mar de los 7 colores. Hotel todo incluido y actividades acuáticas.</p>
+            <div class="price">
+              <span class="price-tag">$1,800,000</span>
+              <button class="book-btn" onclick="bookTrip('San Andrés')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="destination-card">
+          <div class="destination-image">Eje Cafetero, Colombia</div>
+          <div class="destination-info">
+            <h3>Ruta del Café</h3>
+            <p>6 días / 5 noches conociendo la cultura cafetera. Incluye tours a fincas y degustaciones.</p>
+            <div class="price">
+              <span class="price-tag">$950,000</span>
+              <button class="book-btn" onclick="bookTrip('Eje Cafetero')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="destination-card">
+          <div class="destination-image">Machu Picchu, Perú</div>
+          <div class="destination-info">
+            <h3>Ciudadela Sagrada</h3>
+            <p>7 días / 6 noches explorando Cusco y Machu Picchu. Guía especializado y tren panorámico.</p>
+            <div class="price">
+              <span class="price-tag">$2,500,000</span>
+              <button class="book-btn" onclick="bookTrip('Machu Picchu')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="destination-card">
+          <div class="destination-image">París, Francia</div>
+          <div class="destination-info">
+            <h3>Ciudad del Amor</h3>
+            <p>8 días / 7 noches en París. Hotel céntrico, tours guiados y entrada a principales atracciones.</p>
+            <div class="price">
+              <span class="price-tag">$4,200,000</span>
+              <button class="book-btn" onclick="bookTrip('París')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="destination-card">
+          <div class="destination-image">Cancún, México</div>
+          <div class="destination-info">
+            <h3>Riviera Maya</h3>
+            <p>6 días / 5 noches todo incluido. Resort 5 estrellas, cenotes y ruinas mayas.</p>
+            <div class="price">
+              <span class="price-tag">$2,800,000</span>
+              <button class="book-btn" onclick="bookTrip('Cancún')">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="container">
+      <h2 class="section-title">Nuestros Servicios</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🎯</div>
+          <h3>Asesoría Personalizada</h3>
+          <p>Te ayudamos a planificar el viaje perfecto según tus gustos y presupuesto.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🌍</div>
+          <h3>Paquetes Completos</h3>
+          <p>Viajes nacionales e internacionales con todo incluido para tu tranquilidad.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✈️</div>
+          <h3>Reservas y Vuelos</h3>
+          <p>Gestionamos todos los aspectos logísticos de tu viaje de forma profesional.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💰</div>
+          <h3>Mejores Precios</h3>
+          <p>Garantizamos tarifas competitivas y opciones de financiamiento flexibles.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🏨</div>
+          <h3>Hoteles Premium</h3>
+          <p>Seleccionamos los mejores alojamientos para cada destino y presupuesto.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎭</div>
+          <h3>Experiencias Únicas</h3>
+          <p>Tours exclusivos y actividades especiales que harán tu viaje inolvidable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="container">
+      <h2 class="section-title">Contáctanos</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <h3>Email</h3>
+          <p>contacto@jirethviajes.com</p>
+          <p>ventas@jirethviajes.com</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <h3>WhatsApp</h3>
+          <p>+57 300 123 4567</p>
+          <p>+57 301 987 6543</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <h3>Oficina</h3>
+          <p>Calle 72 #10-34</p>
+          <p>Bogotá, Colombia</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📷</div>
+          <h3>Redes Sociales</h3>
+          <p>@jirethviajes</p>
+          <p>Facebook | Instagram</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Jireth Agencia de Viajes. Todos los derechos reservados. | Registro Nacional de Turismo: 12345</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Header background change on scroll
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+        header.style.background = 'rgba(255, 255, 255, 0.98)';
+      } else {
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+      }
+    });
+
+    // Book trip function
+    function bookTrip(destination) {
+      alert(`¡Excelente elección! Te contactaremos pronto para finalizar tu reserva a ${destination}. 
+      
+WhatsApp: +57 300 123 4567
+Email: contacto@jirethviajes.com`);
+    }
+
+    // Animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards for animations
+    document.querySelectorAll('.destination-card, .service-card, .contact-item').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'all 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
